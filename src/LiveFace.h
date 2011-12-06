@@ -1,5 +1,5 @@
 /*
- *  Face.cpp
+ *  Face.h
  *
  *  Copyright (c) 2011, Neil Mendoza, http://www.neilmendoza.com
  *  All rights reserved. 
@@ -29,5 +29,15 @@
  *  POSSIBILITY OF SUCH DAMAGE. 
  *
  */
-#include "Face.h"
+#pragma once
 
+#include "ofMain.h"
+
+class LiveFace : public ofRectangle
+{
+public:
+	LiveFace(ofRectangle current);
+	void lerpToCurrent(float factor);
+private:
+	ofRectangle current;
+};

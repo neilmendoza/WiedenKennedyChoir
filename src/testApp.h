@@ -17,6 +17,8 @@ public:
 	void keyPressed(int key);
 	
 private:
+	void readData();
+	void lerp(ofRectangle& rect, const ofRectangle& dest, float factor);
 	float lerpFactor;
 	
 	FaceTracker faceTracker;

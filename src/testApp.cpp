@@ -30,7 +30,7 @@ void testApp::setup()
 	facesFbo.allocate(width, height, GL_RGBA, ofFbo::maxSamples());
 	masker.setup(width, height);
 	
-	lerpFactor = 0.3;
+	lerpFactor = 0.4;
 }
 
 void testApp::update()
@@ -44,24 +44,32 @@ void testApp::update()
 		{
 			if (!tracker.existsCurrent(it->first)) faces.erase(it);
 		}
-		
+		newFaces.clear();
 		vector<unsigned> labels = tracker.getCurrentLabels();
 		for (int i = 0; i < labels.size(); ++i)
 		{
 			ofRectangle rect = toOf(tracker.getCurrent(labels[i]));
 			map<unsigned, ofRectangle>::iterator it = faces.find(labels[i]);
 			if (it == faces.end()) faces.insert(make_pair(labels[i], rect));
-			else
-			{
-				faces[labels[i]].x = rect.x + lerpFactor * (faces[labels[i]].x - rect.x);
-				faces[labels[i]].y = rect.y + lerpFactor * (faces[labels[i]].y - rect.y);
-				faces[labels[i]].width = rect.width + lerpFactor * (faces[labels[i]].width - rect.width);
-				faces[labels[i]].height = rect.height + lerpFactor * (faces[labels[i]].height - rect.height);
-			}
+			newFaces.insert(make_pair(labels[i], rect));
 		}
 		faceTracker.update(*videoPtr);
 	}
 	
+	for (map<unsigned, ofRectangle>::iterator it = faces.begin(); it != faces.end(); ++it)
+	{
+		map<unsigned, ofRectangle>::iterator it2 = newFaces.find(it->first);
+		if (it2 != newFaces.end()) lerp(it->second, newFaces.find(it->first)->second, lerpFactor);
+	}
+	
+}
+
+void testApp::lerp(ofRectangle& rect, const ofRectangle& dest, float factor)
+{
+	rect.x = rect.x + lerpFactor * (dest.x - rect.x);
+	rect.y = rect.y + lerpFactor * (dest.y - rect.y);
+	rect.width = rect.width + lerpFactor * (dest.width - rect.width);
+	rect.height = rect.height + lerpFactor * (dest.height - rect.height);
 }
 
 void testApp::draw()

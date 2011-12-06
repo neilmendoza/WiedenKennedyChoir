@@ -222,48 +222,7 @@
 		</dict>
 	</array>
 	<key>OpenEditors</key>
-	<array>
-		<dict>
-			<key>Content</key>
-			<dict>
-				<key>PBXProjectModuleGUID</key>
-				<string>2833FE02148E77780073C07A</string>
-				<key>PBXProjectModuleLabel</key>
-				<string>FaceTracker.h</string>
-				<key>PBXSplitModuleInNavigatorKey</key>
-				<dict>
-					<key>Split0</key>
-					<dict>
-						<key>PBXProjectModuleGUID</key>
-						<string>2833FE03148E77780073C07A</string>
-						<key>PBXProjectModuleLabel</key>
-						<string>FaceTracker.h</string>
-						<key>_historyCapacity</key>
-						<integer>10</integer>
-						<key>bookmark</key>
-						<string>2833FF1B148E85CF0073C07A</string>
-						<key>history</key>
-						<array>
-							<string>2833FE04148E77780073C07A</string>
-						</array>
-					</dict>
-					<key>SplitCount</key>
-					<string>1</string>
-				</dict>
-				<key>StatusBarVisibility</key>
-				<true/>
-			</dict>
-			<key>Geometry</key>
-			<dict>
-				<key>Frame</key>
-				<string>{{0, 20}, {1059, 649}}</string>
-				<key>PBXModuleWindowStatusBarHidden2</key>
-				<false/>
-				<key>RubberWindowFrame</key>
-				<string>38 162 1059 690 0 0 1440 878 </string>
-			</dict>
-		</dict>
-	</array>
+	<array/>
 	<key>PerspectiveWidths</key>
 	<array>
 		<integer>-1</integer>
@@ -390,7 +349,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>testApp.cpp</string>
+								<string>testApp.h</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -398,23 +357,23 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>testApp.cpp</string>
+										<string>testApp.h</string>
 										<key>_historyCapacity</key>
 										<integer>10</integer>
 										<key>bookmark</key>
-										<string>2833FF1A148E85CF0073C07A</string>
+										<string>28330006148E9FB10073C07A</string>
 										<key>history</key>
 										<array>
-											<string>2833FDFE148E77780073C07A</string>
-											<string>2833FE1F148E78980073C07A</string>
-											<string>2833FE20148E78980073C07A</string>
-											<string>2833FE42148E7C220073C07A</string>
-											<string>2833FE44148E7C220073C07A</string>
-											<string>2833FE45148E7C220073C07A</string>
-											<string>2833FE6C148E7CDE0073C07A</string>
-											<string>2833FF10148E84360073C07A</string>
-											<string>2833FF18148E85CF0073C07A</string>
-											<string>2833FF19148E85CF0073C07A</string>
+											<string>2833FFBF148E9A730073C07A</string>
+											<string>2833FFD2148E9AF80073C07A</string>
+											<string>2833FFFF148E9FB10073C07A</string>
+											<string>28330000148E9FB10073C07A</string>
+											<string>28330001148E9FB10073C07A</string>
+											<string>28330002148E9FB10073C07A</string>
+											<string>28330003148E9FB10073C07A</string>
+											<string>28330004148E9FB10073C07A</string>
+											<string>28330005148E9FB10073C07A</string>
+											<string>2833FFE3148E9C090073C07A</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -595,7 +554,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>344884687.67245603</real>
+	<real>344891313.50428098</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>
@@ -612,12 +571,11 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>2833FF1C148E85CF0073C07A</string>
+		<string>28330007148E9FB10073C07A</string>
 		<string>2833FD5C148E6C050073C07A</string>
 		<string>2833FD5D148E6C050073C07A</string>
 		<string>1CD10A99069EF8BA00B06720</string>
 		<string>280099A1148E2BD200F1979E</string>
-		<string>2833FE02148E77780073C07A</string>
 		<string>/Users/neil/Projects/of_preRelease_v007_osx/apps/faceTests/haarThread/haarThread.xcodeproj</string>
 		<string>1C78EAAD065D492600B07095</string>
 	</array>
@@ -645,7 +603,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>testApp.cpp</string>
+								<string>LiveFace.cpp</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -962,7 +920,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {650, 209}}</string>
 								<key>RubberWindowFrame</key>
-								<string>42 582 650 250 0 0 1440 878 </string>
+								<string>207 477 650 250 0 0 1440 878 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXDebugCLIModule</string>
@@ -991,7 +949,7 @@
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.consoleV3</string>
 			<key>WindowString</key>
-			<string>42 582 650 250 0 0 1440 878 </string>
+			<string>207 477 650 250 0 0 1440 878 </string>
 			<key>WindowToolGUID</key>
 			<string>1C78EAAD065D492600B07095</string>
 			<key>WindowToolIsVisible</key>

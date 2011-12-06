@@ -1,5 +1,5 @@
 /*
- *  Face.h
+ *  ChoirFace.cpp
  *
  *  Copyright (c) 2011, Neil Mendoza, http://www.neilmendoza.com
  *  All rights reserved. 
@@ -29,13 +29,28 @@
  *  POSSIBILITY OF SUCH DAMAGE. 
  *
  */
-#pragma once
+#include "ChoirFace.h"
 
-#include "ofMain.h"
-
-class Face : public ofRectangle
+Triangle::Triangle(ofVec2f p1, ofVec2f p2, ofVec2f p3) : p1(p1), p2(p2), p3(p3)
 {
-public:
-	void lerpTo(float factor);
-private:
-};
+}
+
+void ChoirFace::load(const string& fileName)
+{
+	/*ifstream data;
+	string line;
+	data.open(ofToDataPath(fileName, true).c_str());
+	getline(data, line);
+	while(!data.eof())
+	{
+		getline(data, line);
+		if (reading)
+		{
+			if (line.find("\t") == -1) break;
+			times.back().push_back(atof(line.substr(1, line.find("\t", 1) - 1).c_str()));
+			readings.back().push_back(atof(line.substr(line.find("\t", 1)).c_str()));
+		}
+		if (line.find("Frame") != -1) reading = true;
+	}
+	data.close();*/
+}
