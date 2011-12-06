@@ -34,7 +34,7 @@ void testApp::setup()
 	masker.setup(ofGetWidth(), ofGetHeight());
 	
 	// this is the smoothing factor for the live face rectangles
-	lerpFactor = 0.4;
+	lerpFactor = 0.5;
 	
 	choirVideo.loadMovie("choir-1080p - all.mov");
 	choirVideo.play();
@@ -143,7 +143,7 @@ void testApp::draw()
 	}
 	
 	// draw choir face triangles
-	choirFace.drawTriangle(choirVideo.getCurrentFrame());
+	//choirFace.drawTriangle(choirVideo.getCurrentFrame());
 	
 	ostringstream oss;
 	oss << faces.size() << " faces found";
