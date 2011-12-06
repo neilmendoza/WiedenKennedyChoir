@@ -33,20 +33,33 @@
 
 #include "ofMain.h"
 
-class Triangle
+class Frame
 {
 public:
-	Triangle(ofVec2f p1, ofVec2f p2, ofVec2f p3);
-private:
+	friend class ChoirFace;
+	static const ofVec2f X_AXIS;
+	
+	Frame(ofVec2f p1, ofVec2f p2, ofVec2f p3);
+
 	ofVec2f p1;
 	ofVec2f p2;
 	ofVec2f p3;
+	
+	ofVec2f centre;
+	float w, halfW, h, halfH;
+	//float scale, halfScale;
+	
+	float angle;
 };
 
 class ChoirFace
 {
 public:
+	static const ofVec2f CROP_SHIFT;
+	
 	void load(const string& fileName);
+	void drawTriangle(int frameNum);
+	const Frame& getFrame(int frameNum) { return frames[frameNum]; }
 private:
-	vector<Triangle> triangles;
+	vector<Frame> frames;
 };

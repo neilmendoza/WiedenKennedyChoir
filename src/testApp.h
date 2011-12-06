@@ -4,12 +4,15 @@
 #include "ofxCv.h"
 #include "FaceTracker.h"
 #include "ofxMask.h"
+#include "LiveFace.h"
+#include "ChoirFace.h"
 
 using namespace ofxCv;
 
 #define _LIVE
 
-class testApp : public ofBaseApp {
+class testApp : public ofBaseApp
+{
 public:
 	void setup();
 	void update();
@@ -17,14 +20,12 @@ public:
 	void keyPressed(int key);
 	
 private:
-	void readData();
-	void lerp(ofRectangle& rect, const ofRectangle& dest, float factor);
 	float lerpFactor;
 	
 	FaceTracker faceTracker;
 	
-	map<unsigned, ofRectangle> faces;
-	map<unsigned, ofRectangle> newFaces;
+	map<unsigned, LiveFace> faces;
+	ChoirFace choirFace;
 	
 	float scaleFactor;
 	
@@ -35,6 +36,8 @@ private:
 #else
 	ofVideoPlayer player;
 #endif	
+	
+	ofVideoPlayer choirVideo;
 	
 	ofFbo facesFbo;
 	

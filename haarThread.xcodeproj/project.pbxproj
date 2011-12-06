@@ -18,6 +18,10 @@
 		2705B4C2143D6F0400F2A09E /* Wrappers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2705B4BA143D6F0400F2A09E /* Wrappers.cpp */; };
 		280099BF148E2D2400F1979E /* FaceTracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 280099BE148E2D2400F1979E /* FaceTracker.cpp */; };
 		28009C2E148E4D4300F1979E /* ofxMask.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28009C2C148E4D4300F1979E /* ofxMask.cpp */; };
+		2833004C148EA4FE0073C07A /* tinyxml.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28330045148EA4FE0073C07A /* tinyxml.cpp */; };
+		2833004D148EA4FE0073C07A /* tinyxmlerror.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28330047148EA4FE0073C07A /* tinyxmlerror.cpp */; };
+		2833004E148EA4FE0073C07A /* tinyxmlparser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 28330048148EA4FE0073C07A /* tinyxmlparser.cpp */; };
+		2833004F148EA4FE0073C07A /* ofxXmlSettings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2833004A148EA4FE0073C07A /* ofxXmlSettings.cpp */; };
 		2833FD0A148E6A520073C07A /* LiveFace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2833FD09148E6A520073C07A /* LiveFace.cpp */; };
 		2833FFDF148E9BB10073C07A /* ChoirFace.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2833FFDE148E9BB10073C07A /* ChoirFace.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
@@ -158,6 +162,13 @@
 		280099BE148E2D2400F1979E /* FaceTracker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FaceTracker.cpp; sourceTree = "<group>"; };
 		28009C2C148E4D4300F1979E /* ofxMask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxMask.cpp; sourceTree = "<group>"; };
 		28009C2D148E4D4300F1979E /* ofxMask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMask.h; sourceTree = "<group>"; };
+		28330043148EA4FE0073C07A /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
+		28330045148EA4FE0073C07A /* tinyxml.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxml.cpp; sourceTree = "<group>"; };
+		28330046148EA4FE0073C07A /* tinyxml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tinyxml.h; sourceTree = "<group>"; };
+		28330047148EA4FE0073C07A /* tinyxmlerror.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlerror.cpp; sourceTree = "<group>"; };
+		28330048148EA4FE0073C07A /* tinyxmlparser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tinyxmlparser.cpp; sourceTree = "<group>"; };
+		2833004A148EA4FE0073C07A /* ofxXmlSettings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxXmlSettings.cpp; sourceTree = "<group>"; };
+		2833004B148EA4FE0073C07A /* ofxXmlSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxXmlSettings.h; sourceTree = "<group>"; };
 		2833FD08148E6A520073C07A /* LiveFace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LiveFace.h; sourceTree = "<group>"; };
 		2833FD09148E6A520073C07A /* LiveFace.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LiveFace.cpp; sourceTree = "<group>"; };
 		2833FFDD148E9BB10073C07A /* ChoirFace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChoirFace.h; sourceTree = "<group>"; };
@@ -535,9 +546,41 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		28330042148EA4FE0073C07A /* ofxXmlSettings */ = {
+			isa = PBXGroup;
+			children = (
+				28330043148EA4FE0073C07A /* install.xml */,
+				28330044148EA4FE0073C07A /* libs */,
+				28330049148EA4FE0073C07A /* src */,
+			);
+			name = ofxXmlSettings;
+			path = ../../../addons/ofxXmlSettings;
+			sourceTree = SOURCE_ROOT;
+		};
+		28330044148EA4FE0073C07A /* libs */ = {
+			isa = PBXGroup;
+			children = (
+				28330045148EA4FE0073C07A /* tinyxml.cpp */,
+				28330046148EA4FE0073C07A /* tinyxml.h */,
+				28330047148EA4FE0073C07A /* tinyxmlerror.cpp */,
+				28330048148EA4FE0073C07A /* tinyxmlparser.cpp */,
+			);
+			path = libs;
+			sourceTree = "<group>";
+		};
+		28330049148EA4FE0073C07A /* src */ = {
+			isa = PBXGroup;
+			children = (
+				2833004A148EA4FE0073C07A /* ofxXmlSettings.cpp */,
+				2833004B148EA4FE0073C07A /* ofxXmlSettings.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				28330042148EA4FE0073C07A /* ofxXmlSettings */,
 				28009C2A148E4D4300F1979E /* ofxMask */,
 				2705B337143D6DA300F2A09E /* ofxCv */,
 			);
@@ -724,6 +767,10 @@
 				28009C2E148E4D4300F1979E /* ofxMask.cpp in Sources */,
 				2833FD0A148E6A520073C07A /* LiveFace.cpp in Sources */,
 				2833FFDF148E9BB10073C07A /* ChoirFace.cpp in Sources */,
+				2833004C148EA4FE0073C07A /* tinyxml.cpp in Sources */,
+				2833004D148EA4FE0073C07A /* tinyxmlerror.cpp in Sources */,
+				2833004E148EA4FE0073C07A /* tinyxmlparser.cpp in Sources */,
+				2833004F148EA4FE0073C07A /* ofxXmlSettings.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -26,109 +26,124 @@ void testApp::setup()
 	player.play();
 	videoPtr = &player;
 #endif
+	// set this up to be the width and height of the camera
 	faceTracker.setup(scaleFactor, width, height);
-	facesFbo.allocate(width, height, GL_RGBA, ofFbo::maxSamples());
-	masker.setup(width, height);
 	
+	// set these up to be the width and height to be rendered
+	facesFbo.allocate(ofGetWidth(), ofGetHeight(), GL_RGBA, ofFbo::maxSamples());
+	masker.setup(ofGetWidth(), ofGetHeight());
+	
+	// this is the smoothing factor for the live face rectangles
 	lerpFactor = 0.4;
+	
+	choirVideo.loadMovie("choir-1080p - all.mov");
+	choirVideo.play();
+	choirFace.load("facedata.xml");
 }
 
 void testApp::update()
 {
+	choirVideo.update();
+	
 	videoPtr->update();
 	if(videoPtr->isFrameNew() && !faceTracker.isThreadRunning())	
 	{
 		RectTracker& tracker = faceTracker.getTracker();
 		
-		for (map<unsigned, ofRectangle>::iterator it = faces.begin(); it != faces.end(); ++it)
+		for (map<unsigned, LiveFace>::iterator it = faces.begin(); it != faces.end(); ++it)
 		{
 			if (!tracker.existsCurrent(it->first)) faces.erase(it);
 		}
-		newFaces.clear();
 		vector<unsigned> labels = tracker.getCurrentLabels();
 		for (int i = 0; i < labels.size(); ++i)
 		{
 			ofRectangle rect = toOf(tracker.getCurrent(labels[i]));
-			map<unsigned, ofRectangle>::iterator it = faces.find(labels[i]);
-			if (it == faces.end()) faces.insert(make_pair(labels[i], rect));
-			newFaces.insert(make_pair(labels[i], rect));
+			map<unsigned, LiveFace>::iterator it = faces.find(labels[i]);
+			if (it == faces.end()) faces.insert(make_pair(labels[i], LiveFace(rect)));
+			else it->second.setCurrent(rect);
 		}
 		faceTracker.update(*videoPtr);
 	}
 	
-	for (map<unsigned, ofRectangle>::iterator it = faces.begin(); it != faces.end(); ++it)
+	for (map<unsigned, LiveFace>::iterator it = faces.begin(); it != faces.end(); ++it)
 	{
-		map<unsigned, ofRectangle>::iterator it2 = newFaces.find(it->first);
-		if (it2 != newFaces.end()) lerp(it->second, newFaces.find(it->first)->second, lerpFactor);
+		it->second.lerpToCurrent(lerpFactor);
 	}
-	
 }
 
-void testApp::lerp(ofRectangle& rect, const ofRectangle& dest, float factor)
-{
-	rect.x = rect.x + lerpFactor * (dest.x - rect.x);
-	rect.y = rect.y + lerpFactor * (dest.y - rect.y);
-	rect.width = rect.width + lerpFactor * (dest.width - rect.width);
-	rect.height = rect.height + lerpFactor * (dest.height - rect.height);
-}
 
 void testApp::draw()
 {
+	choirVideo.draw(0, 0);
 	ofSetColor(255, 255, 255, 127);
 
 	//videoPtr->draw(0, 0);
 	
 	ofSetColor(255, 255, 255);
 	
-	ofNoFill();
+	
+	const Frame& frame = choirFace.getFrame(choirVideo.getCurrentFrame());
+	
+	// create faces FBO
 	facesFbo.begin();
 	ofClear(0, 0, 0, 0);
-
 	videoPtr->getTextureReference().bind();
-
-	// create faces FBO
-	glBegin(GL_QUADS);
-	//for(int i = 0; i < objects.size(); ++i)
-	for (map<unsigned, ofRectangle>::iterator it = faces.begin(); it != faces.end(); ++it)
+	
+	for (map<unsigned, LiveFace>::iterator it = faces.begin(); it != faces.end(); ++it)
 	{
+		glPushMatrix();
+		glTranslatef(frame.centre.x, frame.centre.y, 0);
+		glRotatef(frame.angle, 0, 0, 1);
+		
+		glBegin(GL_QUADS);
+		
 		ofRectangle rect = it->second;
 		glTexCoord2f(rect.x / scaleFactor, rect.y / scaleFactor);
-		glVertex3f(rect.x / scaleFactor, rect.y / scaleFactor, 0);
+		glVertex3f(-frame.halfW, -frame.halfH, 0);
 		
 		glTexCoord2f((rect.x + rect.width) / scaleFactor, rect.y / scaleFactor);
-		glVertex3f((rect.x + rect.width) / scaleFactor, rect.y / scaleFactor, 0);
+		glVertex3f(frame.halfW, -frame.halfH, 0);
 		
 		glTexCoord2f((rect.x + rect.width) / scaleFactor, (rect.y + rect.height) / scaleFactor);
-		glVertex3f((rect.x + rect.width) / scaleFactor, (rect.y + rect.height) / scaleFactor, 0);
+		glVertex3f(frame.halfW, frame.halfH, 0);
 		
 		glTexCoord2f(rect.x / scaleFactor, (rect.y + rect.height) / scaleFactor);
-		glVertex3f(rect.x / scaleFactor, (rect.y + rect.height) / scaleFactor, 0);
+		glVertex3f(-frame.halfW, frame.halfH, 0);
+		
+		glEnd();
+		
+		glPopMatrix();
 	}
-	glEnd();
-	
 	videoPtr->getTextureReference().unbind();
-
 	facesFbo.end();
 	
 	// create mask FBO
 	masker.beginMask();
-	ofClear(0, 0, 0, 0);
 	ofEnableAlphaBlending();
-	for (map<unsigned, ofRectangle>::iterator it = faces.begin(); it != faces.end(); ++it)
+	for (map<unsigned, LiveFace>::iterator it = faces.begin(); it != faces.end(); ++it)
 	{
 		ofRectangle rect = it->second;
-		maskImage.draw(rect.x / scaleFactor, rect.y / scaleFactor, rect.width / scaleFactor, rect.height / scaleFactor);
+		glPushMatrix();
+		glTranslatef(frame.centre.x, frame.centre.y, 0);
+		glRotatef(frame.angle, 0, 0, 1);
+		maskImage.draw(-frame.halfW, -frame.halfH, frame.w, frame.h);
+		
+		glPopMatrix();
 	}
 	masker.endMask();
 	
 	masker.drawEffect(facesFbo.getTextureReference());
 	
+	
 	// draw labels
-	for (map<unsigned, ofRectangle>::iterator it = faces.begin(); it != faces.end(); ++it)
+	for (map<unsigned, LiveFace>::iterator it = faces.begin(); it != faces.end(); ++it)
 	{
 		ofRectangle rect = it->second;
 		ofDrawBitmapString(ofToString(it->first), rect.x / scaleFactor, rect.y / scaleFactor);
 	}
+	
+	// draw choir face triangles
+	choirFace.drawTriangle(choirVideo.getCurrentFrame());
 	
 	ostringstream oss;
 	oss << faces.size() << " faces found";

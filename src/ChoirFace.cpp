@@ -30,27 +30,41 @@
  *
  */
 #include "ChoirFace.h"
+#include "ofxXmlSettings.h"
 
-Triangle::Triangle(ofVec2f p1, ofVec2f p2, ofVec2f p3) : p1(p1), p2(p2), p3(p3)
+const ofVec2f Frame::X_AXIS(1, 0);
+const ofVec2f ChoirFace::CROP_SHIFT(-472, -192);
+
+Frame::Frame(ofVec2f p1, ofVec2f p2, ofVec2f p3) : p1(p1), p2(p2), p3(p3)
 {
+	centre = (p1 + p2 + p3) / 3.f; 
+	angle = p1.angle(p2);
+	w = 5.f * (p2 - p1).length();
+	halfW = 0.5f * w;
+	h = 5.f * (p3 - (p1 + p2) * .5f).length();
+	halfH = 0.5f * h;
 }
 
 void ChoirFace::load(const string& fileName)
 {
-	/*ifstream data;
-	string line;
-	data.open(ofToDataPath(fileName, true).c_str());
-	getline(data, line);
-	while(!data.eof())
+	ofxXmlSettings xml;
+	xml.loadFile(fileName);
+	xml.pushTag("choir");
+	for (int i = 0; i < xml.getNumTags("FRAME"); ++i)
 	{
-		getline(data, line);
-		if (reading)
-		{
-			if (line.find("\t") == -1) break;
-			times.back().push_back(atof(line.substr(1, line.find("\t", 1) - 1).c_str()));
-			readings.back().push_back(atof(line.substr(line.find("\t", 1)).c_str()));
-		}
-		if (line.find("Frame") != -1) reading = true;
+		xml.pushTag("FRAME", i);
+		ofVec2f pt1(xml.getValue("POINT1:X", 0) + CROP_SHIFT.x, xml.getValue("POINT1:Y", 0) + CROP_SHIFT.y);
+		ofVec2f pt2(xml.getValue("POINT2:X", 0) + CROP_SHIFT.x, xml.getValue("POINT2:Y", 0) + CROP_SHIFT.y);
+		ofVec2f pt3(xml.getValue("POINT3:X", 0) + CROP_SHIFT.x, xml.getValue("POINT3:Y", 0) + CROP_SHIFT.y);
+		frames.push_back(Frame(pt1, pt2, pt3));
+		xml.popTag();
 	}
-	data.close();*/
+}
+
+void ChoirFace::drawTriangle(int frameNum)
+{
+	//cout << frames[frameNum].p1 << " " << frames[frameNum].p2 << endl;
+	ofLine(frames[frameNum].p1, frames[frameNum].p2);
+	ofLine(frames[frameNum].p2, frames[frameNum].p3);
+	ofLine(frames[frameNum].p3, frames[frameNum].p1);
 }
