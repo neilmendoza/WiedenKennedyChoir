@@ -134,6 +134,7 @@ void testApp::draw()
 	
 	masker.drawEffect(facesFbo.getTextureReference());
 	
+	//facesFbo.draw(0, 0);
 	
 	// draw labels
 	for (map<unsigned, LiveFace>::iterator it = faces.begin(); it != faces.end(); ++it)
