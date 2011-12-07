@@ -95,58 +95,85 @@ void testApp::draw()
 	//videoPtr->draw(0, 0);
 	
 	ofSetColor(255, 255, 255);
-	
-	
-	const Frame& frame = choirFaces[0].getFrame(choirVideo.getCurrentFrame());
-	
+
 	// create faces FBO
 	facesFbo.begin();
+	
 	ofClear(0, 0, 0, 0);
+	
+	// bind the video input
 	videoPtr->getTextureReference().bind();
 	
-	for (map<unsigned, LiveFace>::iterator it = faces.begin(); it != faces.end(); ++it)
-	{
-		glPushMatrix();
-		glTranslatef(frame.centre.x, frame.centre.y, 0);
-		glRotatef(frame.angle, 0, 0, 1);
+	for (int i = 0; i < choirFaces.size(); i++) {
+			
+		const Frame& frame = choirFaces[i].getFrame(choirVideo.getCurrentFrame());
 		
-		glBegin(GL_QUADS);
 		
-		ofRectangle rect = it->second;
-		glTexCoord2f(rect.x / scaleFactor, rect.y / scaleFactor);
-		glVertex3f(-frame.halfW, -frame.halfH, 0);
-		
-		glTexCoord2f((rect.x + rect.width) / scaleFactor, rect.y / scaleFactor);
-		glVertex3f(frame.halfW, -frame.halfH, 0);
-		
-		glTexCoord2f((rect.x + rect.width) / scaleFactor, (rect.y + rect.height) / scaleFactor);
-		glVertex3f(frame.halfW, frame.halfH, 0);
-		
-		glTexCoord2f(rect.x / scaleFactor, (rect.y + rect.height) / scaleFactor);
-		glVertex3f(-frame.halfW, frame.halfH, 0);
-		
-		glEnd();
-		
-		glPopMatrix();
+		// for each face box detected
+		for (map<unsigned, LiveFace>::iterator it = faces.begin(); it != faces.end(); ++it)
+		{
+			glPushMatrix();
+
+			glTranslatef(frame.centre.x, frame.centre.y, 0);
+			glRotatef(frame.angle, 0, 0, 1);
+			
+			glBegin(GL_QUADS);
+			
+			// grab the rect of this liveFace
+			ofRectangle rect = it->second;
+			
+			// create the first vertex
+			glTexCoord2f(rect.x / scaleFactor, rect.y / scaleFactor);
+			glVertex3f(-frame.halfW, -frame.halfH, 0);
+			
+			// create the second vertex
+			glTexCoord2f((rect.x + rect.width) / scaleFactor, rect.y / scaleFactor);
+			glVertex3f(frame.halfW, -frame.halfH, 0);
+			
+			// create the third vertex
+			glTexCoord2f((rect.x + rect.width) / scaleFactor, (rect.y + rect.height) / scaleFactor);
+			glVertex3f(frame.halfW, frame.halfH, 0);
+			
+			// create the final vertex
+			glTexCoord2f(rect.x / scaleFactor, (rect.y + rect.height) / scaleFactor);
+			glVertex3f(-frame.halfW, frame.halfH, 0);
+			
+			glEnd();
+			
+			glPopMatrix();
+		}
 	}
+	
+	// unbind the video input feed
 	videoPtr->getTextureReference().unbind();
+	
+	// finished creating the frame buffer object
 	facesFbo.end();
 	
+	/*
 	// create mask FBO
 	masker.beginMask();
 	ofEnableAlphaBlending();
-	for (map<unsigned, LiveFace>::iterator it = faces.begin(); it != faces.end(); ++it)
-	{
-		ofRectangle rect = it->second;
-		glPushMatrix();
-		glTranslatef(frame.centre.x, frame.centre.y, 0);
-		glRotatef(frame.angle, 0, 0, 1);
-		maskImage.draw(-frame.halfW, -frame.halfH, frame.w, frame.h);
+
+	for (int i = 0; i < choirFaces.size(); i++) {
 		
-		glPopMatrix();
+		const Frame& frame = choirFaces[i].getFrame(choirVideo.getCurrentFrame());
+		for (map<unsigned, LiveFace>::iterator it = faces.begin(); it != faces.end(); ++it)
+		{
+			ofRectangle rect = it->second;
+			glPushMatrix();
+			glTranslatef(frame.centre.x, frame.centre.y, 0);
+			glRotatef(frame.angle, 0, 0, 1);
+			maskImage.draw(-frame.halfW, -frame.halfH, frame.w, frame.h);
+			
+			glPopMatrix();
+		}
 	}
+
 	masker.endMask();
+*/
 	
+	// the masker draws the faces FBO texture
 	masker.drawEffect(facesFbo.getTextureReference());
 	
 	// Draw the unmasked faces FBO

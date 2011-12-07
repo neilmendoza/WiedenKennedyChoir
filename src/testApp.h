@@ -50,5 +50,6 @@ private:
 	int height;
 	
 	ofImage maskImage;
+	//vector<Apex::ofxMask> masker;
 	Apex::ofxMask masker;
 };
