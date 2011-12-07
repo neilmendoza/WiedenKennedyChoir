@@ -60,6 +60,8 @@ public:
 	void load(const string& fileName);
 	void drawTriangle(int frameNum);
 	const Frame& getFrame(int frameNum) { return frames[frameNum]; }
+	int getInteractionLevel() { return interactionLevel; }
 private:
 	vector<Frame> frames;
+	int interactionLevel;
 };

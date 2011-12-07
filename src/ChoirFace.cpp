@@ -49,6 +49,7 @@ void ChoirFace::load(const string& fileName)
 {
 	ofxXmlSettings xml;
 	xml.loadFile(fileName);
+	interactionLevel = (int)xml.getAttribute(ofToString("CHOIRFACE"), ofToString("interactionLevel"), 0, 0);
 	xml.pushTag("CHOIRFACE");
 	for (int i = 0; i < xml.getNumTags("FRAME"); ++i)
 	{

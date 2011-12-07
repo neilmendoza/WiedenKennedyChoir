@@ -48,6 +48,8 @@ private:
 	
 	int width;
 	int height;
+	int interactionLevel;
+	bool drawTriangles; 
 	
 	ofImage maskImage;
 	//vector<Apex::ofxMask> masker;
