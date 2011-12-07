@@ -49,7 +49,7 @@ void ChoirFace::load(const string& fileName)
 {
 	ofxXmlSettings xml;
 	xml.loadFile(fileName);
-	xml.pushTag("choir");
+	xml.pushTag("CHOIRFACE");
 	for (int i = 0; i < xml.getNumTags("FRAME"); ++i)
 	{
 		xml.pushTag("FRAME", i);

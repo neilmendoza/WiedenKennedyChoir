@@ -36,9 +36,24 @@ void testApp::setup()
 	// this is the smoothing factor for the live face rectangles
 	lerpFactor = 0.5;
 	
+	// Load and play the choir movie
 	choirVideo.loadMovie("choir-1080p - all.mov");
 	choirVideo.play();
-	choirFace.load("facedata.xml");
+	
+	// XML for choir faces
+	choirFaceDir.listDir("choirfacedata"); // find what's in the directory
+	choirFaceDir.sort(); // sort into alphabetical order
+	
+	//allocate the vector to have as many ofImages as files
+	if( choirFaceDir.size() ){
+		choirFaces.assign(choirFaceDir.size(), ChoirFace());
+	}
+	
+	// iterate through the files and load them
+	for(int i = 0; i < (int)choirFaceDir.size(); i++){
+		choirFaces[i].load(choirFaceDir.getPath(i));
+	}
+	printf("*********************** number of loaded faces: %i\n", (int)choirFaceDir.size());
 }
 
 void testApp::update()
@@ -82,7 +97,7 @@ void testApp::draw()
 	ofSetColor(255, 255, 255);
 	
 	
-	const Frame& frame = choirFace.getFrame(choirVideo.getCurrentFrame());
+	const Frame& frame = choirFaces[0].getFrame(choirVideo.getCurrentFrame());
 	
 	// create faces FBO
 	facesFbo.begin();
@@ -134,6 +149,7 @@ void testApp::draw()
 	
 	masker.drawEffect(facesFbo.getTextureReference());
 	
+	// Draw the unmasked faces FBO
 	//facesFbo.draw(0, 0);
 	
 	// draw labels
@@ -144,7 +160,9 @@ void testApp::draw()
 	}
 	
 	// draw choir face triangles
-	//choirFace.drawTriangle(choirVideo.getCurrentFrame());
+	for (int i = 0; i < choirFaces.size(); i++) {
+		choirFaces[i].drawTriangle(choirVideo.getCurrentFrame());
+	}
 	
 	ostringstream oss;
 	oss << faces.size() << " faces found";

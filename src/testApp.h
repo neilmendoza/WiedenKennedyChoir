@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxCv.h"
+#include "ofFileUtils.h"
 #include "FaceTracker.h"
 #include "ofxMask.h"
 #include "LiveFace.h"
@@ -24,8 +25,12 @@ private:
 	
 	FaceTracker faceTracker;
 	
+	ofDirectory choirFaceDir;
+	vector<ofFile> faceDataFiles;
+	
 	map<unsigned, LiveFace> faces;
-	ChoirFace choirFace;
+	vector<ChoirFace> choirFaces;
+	//ChoirFace choirFace;
 	
 	float scaleFactor;
 	
