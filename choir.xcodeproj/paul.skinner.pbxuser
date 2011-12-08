@@ -4,6 +4,9 @@
 		activeBuildConfigurationName = Debug;
 		activeExecutable = F9BDB94214910911001D0A79 /* FaceExample */;
 		activeTarget = E4B69B5A0A3A1756003C02F2 /* FaceExample */;
+		addToTargets = (
+			E4B69B5A0A3A1756003C02F2 /* FaceExample */,
+		);
 		codeSenseManager = F9BDB94A14910916001D0A79 /* Code sense */;
 		executables = (
 			F9BDB94214910911001D0A79 /* FaceExample */,
@@ -43,6 +46,20 @@
 		executables = (
 			F9BDB94214910911001D0A79 /* FaceExample */,
 		);
+	};
+	E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1919, 4368}}";
+			sepNavSelRange = "{2504, 0}";
+			sepNavVisRange = "{1577, 1375}";
+		};
+	};
+	E4B69E1F0A3A1BDC003C02F2 /* testApp.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1919, 897}}";
+			sepNavSelRange = "{1067, 0}";
+			sepNavVisRange = "{169, 901}";
+		};
 	};
 	F9BDB94214910911001D0A79 /* FaceExample */ = {
 		isa = PBXExecutable;

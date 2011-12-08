@@ -1,0 +1,14 @@
+<controls>
+    <SliderInt_bg_threshold>
+        <name>bg threshold</name>
+        <value>20</value>
+    </SliderInt_bg_threshold>
+    <SliderFloat_face_pos_lerp>
+        <name>face pos lerp</name>
+        <value>0.800000</value>
+    </SliderFloat_face_pos_lerp>
+    <SliderFloat_face_size_lerp>
+        <name>face size lerp</name>
+        <value>0.100000</value>
+    </SliderFloat_face_size_lerp>
+</controls>
