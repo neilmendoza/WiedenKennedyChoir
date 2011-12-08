@@ -7,6 +7,7 @@
 #include "ofxMask.h"
 #include "LiveFace.h"
 #include "ChoirFace.h"
+#include "OscHandler.h"
 
 using namespace ofxCv;
 
@@ -63,4 +64,5 @@ private:
 	//vector<Apex::ofxMask> masker;
 	Apex::ofxMask masker;
 	
+	OscHandler messageHandler;
 };
