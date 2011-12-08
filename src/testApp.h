@@ -11,7 +11,7 @@
 
 using namespace ofxCv;
 
-#define _LIVE
+//#define _LIVE
 
 class testApp : public ofBaseApp
 {
@@ -22,7 +22,8 @@ public:
 	void keyPressed(int key);
 	
 private:
-	float lerpFactor;
+	float faceSizeLerp;
+	float facePosLerp;
 	
 	FaceTracker faceTracker;
 	
@@ -46,6 +47,10 @@ private:
 	ofVideoPlayer choirVideos[3];
 	string choirVideoFileNames[3];
 	int currentMovieLevel;
+	float fadeToAlpha;
+	
+	ofVideoPlayer* fadeFrom;
+	ofVideoPlayer* fadeTo;
 	
 	
 	ofFbo facesFbo;
