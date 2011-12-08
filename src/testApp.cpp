@@ -29,6 +29,10 @@ void testApp::setup()
 	drawTriangles = false; // can be changed via keystroke
 	maskImage.loadImage("mask.png"); // to mask the detected faces
 	
+	faceWStretch = .45;
+	faceHStretch = .45;
+	gui.addSlider("Face W stretch", faceWStretch, 0.1f, 0.9f);
+	gui.addSlider("Face H stretch", faceHStretch, 0.1f, 0.9f);
 	
 	messageHandler.setup();
 	
@@ -209,37 +213,25 @@ void testApp::draw()
 				// grab the rect of this liveFace
 				ofRectangle rect = it->second;
 				
+				// add a bit of extra height to stop the bottom of the face
+				// being cropped
+				float extraH = .2f * rect.height;
+				rect.height += extraH;
+				rect.y -= extraH * .5f;
+				
 				float shrink = 0.7;
 				float halfW = shrink * frame.halfW; 
 				float halfH = shrink * halfW * rect.height / rect.width;
 				
 				float step = TWO_PI / 20.f;
 				ofVec2f texCoordOrigin((rect.x + 0.5f * rect.width) / scaleFactor, (rect.y + 0.5f * rect.height) / scaleFactor);
-				ofVec2f texCoordRadii(0.45f * rect.width / scaleFactor, 0.45f * rect.height / scaleFactor);
+				ofVec2f texCoordRadii((1 - faceWStretch) * rect.width / scaleFactor, (1 - faceHStretch) * rect.height / scaleFactor);
 				for (float theta = 0; theta < TWO_PI; theta += step)
 				{
 					glTexCoord2f(texCoordOrigin.x + texCoordRadii.x * sin(theta), texCoordOrigin.y + texCoordRadii.y * cos(theta));
 					glVertex3f(halfW * sin(theta), halfH * cos(theta), 0);
 				}
-				
-				/*
-				// create the first vertex
-				glTexCoord2f(rect.x / scaleFactor, rect.y / scaleFactor);
-				glVertex3f(-halfW, -halfH, 0);
-				
-				// create the second vertex
-				glTexCoord2f((rect.x + rect.width) / scaleFactor, rect.y / scaleFactor);
-				glVertex3f(halfW, -halfH, 0);
-				
-				// create the third vertex
-				glTexCoord2f((rect.x + rect.width) / scaleFactor, (rect.y + rect.height) / scaleFactor);
-				glVertex3f(halfW, halfH, 0);
-				
-				// create the final vertex
-				glTexCoord2f(rect.x / scaleFactor, (rect.y + rect.height) / scaleFactor);
-				glVertex3f(-halfW, halfH, 0);
-				*/
-				
+
 				glEnd();
 				
 				glPopMatrix();

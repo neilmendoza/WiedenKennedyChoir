@@ -309,7 +309,7 @@
 							<key>PBXSmartGroupTreeModuleOutlineStateSelectionKey</key>
 							<array>
 								<array>
-									<integer>3</integer>
+									<integer>6</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
@@ -352,7 +352,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>testApp.cpp</string>
+								<string>FaceTracker.cpp</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -360,22 +360,23 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>testApp.cpp</string>
+										<string>FaceTracker.cpp</string>
 										<key>_historyCapacity</key>
 										<integer>10</integer>
 										<key>bookmark</key>
-										<string>28456B2314912C9300FC516F</string>
+										<string>28456BDD149137F100FC516F</string>
 										<key>history</key>
 										<array>
-											<string>2866BBAA1490E3BD004E6342</string>
-											<string>2866BBAB1490E3BD004E6342</string>
-											<string>2866BC731490F187004E6342</string>
 											<string>284569B41491044E00FC516F</string>
-											<string>284569C61491049D00FC516F</string>
 											<string>28456A93149119A200FC516F</string>
 											<string>28456A94149119A200FC516F</string>
-											<string>28456B1814912B1300FC516F</string>
-											<string>28456B1214912AA600FC516F</string>
+											<string>28456B3A14912F8100FC516F</string>
+											<string>28456B461491304D00FC516F</string>
+											<string>28456B951491355000FC516F</string>
+											<string>28456B9D1491364F00FC516F</string>
+											<string>28456BA01491366300FC516F</string>
+											<string>28456BD9149137D700FC516F</string>
+											<string>28456BDA149137D700FC516F</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -556,7 +557,7 @@
 	<key>StatusbarIsVisible</key>
 	<true/>
 	<key>TimeStamp</key>
-	<real>345058451.346771</real>
+	<real>345061361.53633499</real>
 	<key>ToolbarConfigUserDefaultsMinorVersion</key>
 	<string>2</string>
 	<key>ToolbarDisplayMode</key>
@@ -573,7 +574,6 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>28456B2414912C9300FC516F</string>
 		<string>28456A99149119A200FC516F</string>
 		<string>28456A9A149119A200FC516F</string>
 		<string>280099A1148E2BD200F1979E</string>
@@ -603,7 +603,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>testApp.cpp</string>
+								<string>FaceTracker.h</string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>

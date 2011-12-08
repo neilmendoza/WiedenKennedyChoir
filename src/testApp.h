@@ -22,6 +22,9 @@ public:
 	void keyPressed(int key);
 	
 private:
+	float faceWStretch;
+	float faceHStretch;
+	
 	float faceSizeLerp;
 	float facePosLerp;
 	
