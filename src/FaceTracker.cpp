@@ -125,6 +125,8 @@ void FaceTracker::threadedFunction()
 				total += ofVec2f(nextPts[j].x - prevPts[j].x, nextPts[j].y - prevPts[j].y);
 			}
 			total *= 1.f / prevPts.size();
+			//objects[i].x -= 0.5f * total.x;
+			//objects[i].y -= 0.5f * total.y;
 		}
 	}
 	*/
