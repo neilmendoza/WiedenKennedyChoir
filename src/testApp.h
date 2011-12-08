@@ -49,6 +49,8 @@ private:
 	int currentMovieLevel;
 	float fadeToAlpha;
 	
+	int yShift;
+	
 	ofVideoPlayer* fadeFrom;
 	ofVideoPlayer* fadeTo;
 	

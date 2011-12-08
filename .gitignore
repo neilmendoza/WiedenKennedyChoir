@@ -2,3 +2,4 @@ build/
 bin/*.app
 bin/data/street.mov
 bin/data/_settings.xml
+bin/data/_settings.xml.bak
