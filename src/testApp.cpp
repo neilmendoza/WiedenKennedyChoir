@@ -24,6 +24,10 @@ void testApp::setup()
 	choirVideoFileNames[2] = "choir-1080p-3.mov";
 	drawTriangles = false; // can be changed via keystroke
 	maskImage.loadImage("mask.png"); // to mask the detected faces
+	
+	
+	messageHandler.setup();
+	
 #ifdef _LIVE
 	cam.initGrabber(width, height);
 	videoPtr = &cam;
@@ -64,7 +68,9 @@ void testApp::setup()
 }
 
 void testApp::update()
-{
+{	
+	messageHandler.update();
+	
 	// update with new frames
 	choirVideos[0].update();
 	videoPtr->update();
@@ -88,6 +94,8 @@ void testApp::update()
 			else it->second.setCurrent(rect);
 		}
 		faceTracker.update(*videoPtr);
+		
+		messageHandler.setFaces(labels.size());
 	}
 	
 	for (map<unsigned, LiveFace>::iterator it = faces.begin(); it != faces.end(); ++it)

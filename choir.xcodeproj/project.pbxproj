@@ -46,6 +46,7 @@
 		F99EB23C148FE5D7007696A5 /* ofxOscMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99EB234148FE5D7007696A5 /* ofxOscMessage.cpp */; };
 		F99EB23D148FE5D7007696A5 /* ofxOscReceiver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99EB236148FE5D7007696A5 /* ofxOscReceiver.cpp */; };
 		F99EB23E148FE5D7007696A5 /* ofxOscSender.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F99EB238148FE5D7007696A5 /* ofxOscSender.cpp */; };
+		F9BDB8CE1490F9C3001D0A79 /* OscHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F9BDB8CC1490F9C3001D0A79 /* OscHandler.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -223,6 +224,8 @@
 		F99EB237148FE5D7007696A5 /* ofxOscReceiver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOscReceiver.h; sourceTree = "<group>"; };
 		F99EB238148FE5D7007696A5 /* ofxOscSender.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOscSender.cpp; sourceTree = "<group>"; };
 		F99EB239148FE5D7007696A5 /* ofxOscSender.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxOscSender.h; sourceTree = "<group>"; };
+		F9BDB8CC1490F9C3001D0A79 /* OscHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OscHandler.cpp; sourceTree = "<group>"; };
+		F9BDB8CD1490F9C3001D0A79 /* OscHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OscHandler.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -685,6 +688,8 @@
 				2833FD09148E6A520073C07A /* LiveFace.cpp */,
 				2833FFDD148E9BB10073C07A /* ChoirFace.h */,
 				2833FFDE148E9BB10073C07A /* ChoirFace.cpp */,
+				F9BDB8CC1490F9C3001D0A79 /* OscHandler.cpp */,
+				F9BDB8CD1490F9C3001D0A79 /* OscHandler.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -902,6 +907,7 @@
 				F99EB23C148FE5D7007696A5 /* ofxOscMessage.cpp in Sources */,
 				F99EB23D148FE5D7007696A5 /* ofxOscReceiver.cpp in Sources */,
 				F99EB23E148FE5D7007696A5 /* ofxOscSender.cpp in Sources */,
+				F9BDB8CE1490F9C3001D0A79 /* OscHandler.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
