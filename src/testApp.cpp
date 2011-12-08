@@ -18,7 +18,11 @@ void testApp::setup()
 	scaleFactor = 0.2;
 	width = 640;
 	height = 480;
-	interactionLevel = 1; // can be changed via keystroke
+	interactionLevel = 0; // can be changed via keystroke
+	currentMovieLevel = 0;
+	choirVideoFileNames[0] = "choir-1080p-1.mov";
+	choirVideoFileNames[1] = "choir-1080p-2.mov";
+	choirVideoFileNames[2] = "choir-1080p-3.mov";
 	drawTriangles = false; // can be changed via keystroke
 	maskImage.loadImage("mask.png"); // to mask the detected faces
 #ifdef _LIVE
@@ -43,8 +47,9 @@ void testApp::setup()
 	gui.addSlider("face size lerp", faceSizeLerp, 0.f, 1.f);
 	
 	// Load and play the choir movie
-	choirVideo.loadMovie("choir-1080p - all.mov");
-	choirVideo.play();
+	for (int i = 0; i < 3; i++) {
+		choirVideos[i].loadMovie(choirVideoFileNames[i]);
+	}
 	
 	// XML for choir faces
 	choirFaceDir.allowExt("xml");
@@ -67,7 +72,7 @@ void testApp::setup()
 void testApp::update()
 {
 	// update with new frames
-	choirVideo.update();
+	choirVideos[0].update();
 	videoPtr->update();
 	
 	// create new thread
@@ -98,12 +103,26 @@ void testApp::update()
 	{
 		it->second.lerpToCurrent(facePosLerp, faceSizeLerp);
 	}
+	
+	if ( currentMovieLevel != interactionLevel ) {
+		choirVideos[interactionLevel].play();
+	}
+
 }
 
 
 void testApp::draw()
 {
-	choirVideo.draw(0, 0);
+	if ( currentMovieLevel == 0 ) currentMovieLevel = interactionLevel;
+	
+	if ( currentMovieLevel != interactionLevel ) {
+		
+		choirVideos[interactionLevel].draw(0, 0);
+		
+	} 
+	
+	choirVideos[currentMovieLevel].draw(0, 0);
+		
 	ofSetColor(255, 255, 255, 127);
 
 	//videoPtr->draw(0, 0);
@@ -139,7 +158,7 @@ void testApp::draw()
 			if ( !unallocatedSlots.empty() ) {	
 					
 				// Find the frame position for that slot on this particular frame
-				const Frame& frame = choirFaces[unallocatedSlots.back()].getFrame(choirVideo.getCurrentFrame());
+				const Frame& frame = choirFaces[unallocatedSlots.back()].getFrame(choirVideos[0].getCurrentFrame());
 				
 				glPushMatrix();
 
@@ -197,7 +216,7 @@ void testApp::draw()
 		
 		if (choirFaces[selection[i]].getInteractionLevel() <= interactionLevel) {
 
-			const Frame& frame = choirFaces[selection[i]].getFrame(choirVideo.getCurrentFrame());
+			const Frame& frame = choirFaces[selection[i]].getFrame(choirVideos[0].getCurrentFrame());
 			for (map<unsigned, LiveFace>::iterator it = faces.begin(); it != faces.end(); ++it)
 			{
 				ofRectangle rect = it->second;
@@ -232,7 +251,7 @@ void testApp::draw()
 	
 	// draw choir face triangles
 	if (drawTriangles) {
-		for (int i = 0; i < choirFaces.size(); i++) choirFaces[i].drawTriangle(choirVideo.getCurrentFrame());
+		for (int i = 0; i < choirFaces.size(); i++) choirFaces[i].drawTriangle(choirVideos[0].getCurrentFrame());
 	}
 	
 	// draw debug images
@@ -264,9 +283,9 @@ void testApp::keyPressed(int key)
 #ifdef _LIVE
 	if (key == 'v') cam.videoSettings();
 #endif
-	if (key == '1') interactionLevel = 1;
-	if (key == '2') interactionLevel = 2;
-	if (key == '3') interactionLevel = 3;
+	if (key == '1') interactionLevel = 0;
+	if (key == '2') interactionLevel = 1;
+	if (key == '3') interactionLevel = 2;
 	if (key == 't') drawTriangles = !drawTriangles;
 	if (key == 'b') faceTracker.resetBackground();
 	if (key == 'g')
