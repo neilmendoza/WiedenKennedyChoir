@@ -28,6 +28,7 @@ void testApp::setup()
 	drawTriangles = false; // can be changed via keystroke
 	maskImage.loadImage("mask.png"); // to mask the detected faces
 #ifdef _LIVE
+	//cam.setDeviceID(2);
 	cam.initGrabber(width, height);
 	videoPtr = &cam;
 #else
@@ -135,11 +136,6 @@ void testApp::update()
 	{
 		it->second.lerpToCurrent(facePosLerp, faceSizeLerp);
 	}
-	
-	if ( currentMovieLevel != interactionLevel ) {
-		choirVideos[interactionLevel].play();
-	}
-
 }
 
 

@@ -10,7 +10,7 @@
 
 using namespace ofxCv;
 
-//#define _LIVE
+#define _LIVE
 
 class testApp : public ofBaseApp
 {
