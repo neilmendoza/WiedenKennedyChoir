@@ -31,33 +31,65 @@
  */
 #include "FaceTracker.h"
 
+#include "ofxSimpleGuiToo.h"
+
 void FaceTracker::setup(float scaleFactor, int w, int h)
 {
 	classifier.load(ofToDataPath("haarcascade_frontalface_alt2.xml"));
 	this->scaleFactor = scaleFactor;
 	// shouldn't need to allocate, resize should do this for us
-	graySmall.allocate(w * scaleFactor, h * scaleFactor, OF_IMAGE_GRAYSCALE);
+	// graySmall.allocate(w * scaleFactor, h * scaleFactor, OF_IMAGE_GRAYSCALE);
+	graySmall = Mat(h * scaleFactor, w * scaleFactor, CV_8UC1);
+	gray = Mat(h, w, CV_8UC1);
+	//tracker.setMinimumAge(200);
+	tracker.setMaximumAge(4);
+	tracker.setMaximumDistance(100);
+	
+	threshold = 20;
+	gui.addSlider("bg threshold", threshold, 0, 255);
+	
+	background.setThresholdValue(20);
+	background.setLearningTime(120);
 }
 
 void FaceTracker::update(ofBaseVideoDraws& video)
 {
 	if (!isThreadRunning())
 	{
-		convertColor(video, gray, CV_RGB2GRAY);
-		resize(gray, graySmall);
-		graySmall.update();
+		videoMat = toCv(video).clone();
+		//cvtColor(toCv(video), gray, CV_RGB2GRAY);
+		//background.update(graySmall, thresholded);
+		//graySmall.update();
 		startThread(true, false);
 	}
 }
 
+void FaceTracker::drawThresholded(int x, int y, int w, int h)
+{
+	//Mat dbg = graySmall & thresholded;
+	//drawMat(dbg, x, y, w, h);
+}
+
+void FaceTracker::resetBackground()
+{
+	background.reset();
+}
 
 void FaceTracker::threadedFunction()
 {
+	resize(videoMat, videoSmallMat, graySmall.size());
+	convertColor(videoSmallMat, graySmall, CV_RGB2GRAY);
 	//convertColor(cam, gray, CV_RGB2GRAY);
-
-	Mat graySmallMat = toCv(graySmall);
-	classifier.detectMultiScale(graySmallMat, objects, 1.06, 1,
-								//CascadeClassifier::DO_CANNY_PRUNING |
+	//resize(gray, graySmall, graySmall.size());
+	background.update(videoSmallMat, thresholded);
+	
+	//dilate(thresholded, thresholded, Mat(), cv::Point(-1,-1), 3);
+	
+	//Mat graySmallMat = toCv(graySmall);
+	//equalizeHist(graySmall, graySmall);
+	
+	classifier.detectMultiScale(graySmall, objects, 1.06, 2,
+								CascadeClassifier::DO_CANNY_PRUNING |
 								//CascadeClassifier::FIND_BIGGEST_OBJECT |
 								//CascadeClassifier::DO_ROUGH_SEARCH |
 								0);

@@ -30,15 +30,31 @@
  *
  */
 #include "LiveFace.h"
+#include "ofxSimpleGuiToo.h"
 
-LiveFace::LiveFace(ofRectangle current) : ofRectangle(current), current(current)
+LiveFace::LiveFace(ofRectangle current) : ofRectangle(current), current(current), outlierCount(0)
 {
 }
 
-void LiveFace::lerpToCurrent(float factor)
+void LiveFace::setCurrent(const ofRectangle& current)
 {
-	x += factor * (current.x - x);
-	y += factor * (current.y - y);
-	width += factor * (current.width - width);
-	height += factor * (current.height - height);
+	ofVec2f diff(x - current.x, y - current.y);
+	if (diff.lengthSquared() > 200 && outlierCount < 4)
+	{
+		outlierCount++;
+	}
+	else
+	{
+		this->current = current;
+		outlierCount = 0;
+	}
+
+}
+
+void LiveFace::lerpToCurrent(float posFactor, float sizeFactor)
+{
+	x += posFactor * (current.x - x);
+	y += posFactor * (current.y - y);
+	width += sizeFactor * (current.width - width);
+	height += sizeFactor * (current.height - height);
 }

@@ -37,8 +37,10 @@ class LiveFace : public ofRectangle
 {
 public:
 	LiveFace(ofRectangle current);
-	void lerpToCurrent(float factor);
-	void setCurrent(const ofRectangle& current) { this->current = current; }
+	void lerpToCurrent(float posFactor, float sizeFactor);
+	void setCurrent(const ofRectangle& current);
+	
 private:
 	ofRectangle current;
+	int outlierCount;
 };

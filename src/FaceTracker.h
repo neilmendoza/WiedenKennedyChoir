@@ -33,6 +33,7 @@
 
 #include "ofMain.h"
 #include "ofxCv.h"
+#include "RunningBackground.h"
 
 using namespace ofxCv;
 
@@ -41,15 +42,25 @@ class FaceTracker : public ofThread
 public:
 	void setup(float scaleFactor, int w, int h);
 	void update(ofBaseVideoDraws& video);
+	void drawThresholded(int x, int y, int w, int h);
 	void threadedFunction();
 	vector<cv::Rect> getObjects() { return objects; }
 	RectTracker& getTracker() { return tracker; }
-	
+	void resetBackground();
+
 private:
+	RunningBackground background;
 	ofxCv::CascadeClassifier classifier;
 	vector<cv::Rect> objects;
 	float scaleFactor;
-	ofImage gray, graySmall;
+	
+	Mat gray, graySmall;
 	RectTracker tracker;
 	
+	Mat videoMat, videoSmallMat;
+	
+	Mat thresholded;
+	Mat curThresh;
+	
+	int threshold;
 };

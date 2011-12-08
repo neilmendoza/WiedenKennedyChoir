@@ -10,7 +10,7 @@
 
 using namespace ofxCv;
 
-#define _LIVE
+//#define _LIVE
 
 class testApp : public ofBaseApp
 {
@@ -21,7 +21,8 @@ public:
 	void keyPressed(int key);
 	
 private:
-	float lerpFactor;
+	float faceSizeLerp;
+	float facePosLerp;
 	
 	FaceTracker faceTracker;
 	
@@ -54,4 +55,5 @@ private:
 	ofImage maskImage;
 	//vector<Apex::ofxMask> masker;
 	Apex::ofxMask masker;
+	
 };
