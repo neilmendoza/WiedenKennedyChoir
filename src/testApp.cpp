@@ -17,7 +17,11 @@ void testApp::setup()
 	scaleFactor = 0.25;
 	width = 640;
 	height = 480;
-	interactionLevel = 1; // can be changed via keystroke
+	interactionLevel = 0; // can be changed via keystroke
+	currentMovieLevel = 0;
+	choirVideoFileNames[0] = "choir-1080p-1.mov";
+	choirVideoFileNames[1] = "choir-1080p-2.mov";
+	choirVideoFileNames[2] = "choir-1080p-3.mov";
 	drawTriangles = false; // can be changed via keystroke
 	maskImage.loadImage("mask.png"); // to mask the detected faces
 #ifdef _LIVE
@@ -39,8 +43,9 @@ void testApp::setup()
 	lerpFactor = 0.7;
 	
 	// Load and play the choir movie
-	choirVideos[0].loadMovie("choir-1080p-3.mov");
-	choirVideos[0].play();
+	for (int i = 0; i < 3; i++) {
+		choirVideos[i].loadMovie(choirVideoFileNames[i]);
+	}
 	
 	// XML for choir faces
 	choirFaceDir.allowExt("xml");
@@ -89,12 +94,26 @@ void testApp::update()
 	{
 		it->second.lerpToCurrent(lerpFactor);
 	}
+	
+	if ( currentMovieLevel != interactionLevel ) {
+		choirVideos[interactionLevel].play();
+	}
+
 }
 
 
 void testApp::draw()
 {
-	choirVideos[0].draw(0, 0);
+	if ( currentMovieLevel == 0 ) currentMovieLevel = interactionLevel;
+	
+	if ( currentMovieLevel != interactionLevel ) {
+		
+		choirVideos[interactionLevel].draw(0, 0);
+		
+	} 
+	
+	choirVideos[currentMovieLevel].draw(0, 0);
+		
 	ofSetColor(255, 255, 255, 127);
 
 	//videoPtr->draw(0, 0);
@@ -234,8 +253,8 @@ void testApp::keyPressed(int key)
 #ifdef _LIVE
 	if (key == 'v') cam.videoSettings();
 #endif
-	if (key == '1') interactionLevel = 1;
-	if (key == '2') interactionLevel = 2;
-	if (key == '3') interactionLevel = 3;
+	if (key == '1') interactionLevel = 0;
+	if (key == '2') interactionLevel = 1;
+	if (key == '3') interactionLevel = 2;
 	if (key == 't') drawTriangles = !drawTriangles;
 }

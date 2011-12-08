@@ -43,6 +43,9 @@ private:
 #endif	
 	
 	ofVideoPlayer choirVideos[3];
+	string choirVideoFileNames[3];
+	int currentMovieLevel;
+	
 	
 	ofFbo facesFbo;
 	
