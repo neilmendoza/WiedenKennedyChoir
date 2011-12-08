@@ -43,7 +43,10 @@ private:
 	ofVideoPlayer player;
 #endif	
 	
-	ofVideoPlayer choirVideo;
+	ofVideoPlayer choirVideos[3];
+	string choirVideoFileNames[3];
+	int currentMovieLevel;
+	
 	
 	ofFbo facesFbo;
 	
