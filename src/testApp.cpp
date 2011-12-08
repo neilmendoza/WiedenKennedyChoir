@@ -39,8 +39,8 @@ void testApp::setup()
 	lerpFactor = 0.7;
 	
 	// Load and play the choir movie
-	choirVideo.loadMovie("choir-1080p - all.mov");
-	choirVideo.play();
+	choirVideos[0].loadMovie("choir-1080p-3.mov");
+	choirVideos[0].play();
 	
 	// XML for choir faces
 	choirFaceDir.allowExt("xml");
@@ -61,7 +61,7 @@ void testApp::setup()
 void testApp::update()
 {
 	// update with new frames
-	choirVideo.update();
+	choirVideos[0].update();
 	videoPtr->update();
 	
 	// create new thread
@@ -94,7 +94,7 @@ void testApp::update()
 
 void testApp::draw()
 {
-	choirVideo.draw(0, 0);
+	choirVideos[0].draw(0, 0);
 	ofSetColor(255, 255, 255, 127);
 
 	//videoPtr->draw(0, 0);
@@ -130,7 +130,7 @@ void testApp::draw()
 			if ( !unallocatedSlots.empty() ) {	
 					
 				// Find the frame position for that slot on this particular frame
-				const Frame& frame = choirFaces[unallocatedSlots.back()].getFrame(choirVideo.getCurrentFrame());
+				const Frame& frame = choirFaces[unallocatedSlots.back()].getFrame(choirVideos[0].getCurrentFrame());
 				
 				glPushMatrix();
 
@@ -184,7 +184,7 @@ void testApp::draw()
 		
 		if (choirFaces[selection[i]].getInteractionLevel() <= interactionLevel) {
 
-			const Frame& frame = choirFaces[selection[i]].getFrame(choirVideo.getCurrentFrame());
+			const Frame& frame = choirFaces[selection[i]].getFrame(choirVideos[0].getCurrentFrame());
 			for (map<unsigned, LiveFace>::iterator it = faces.begin(); it != faces.end(); ++it)
 			{
 				ofRectangle rect = it->second;
@@ -218,7 +218,7 @@ void testApp::draw()
 	
 	// draw choir face triangles
 	if (drawTriangles) {
-		for (int i = 0; i < choirFaces.size(); i++) choirFaces[i].drawTriangle(choirVideo.getCurrentFrame());
+		for (int i = 0; i < choirFaces.size(); i++) choirFaces[i].drawTriangle(choirVideos[0].getCurrentFrame());
 	}
 	
 	ostringstream oss;

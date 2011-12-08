@@ -42,7 +42,7 @@ private:
 	ofVideoPlayer player;
 #endif	
 	
-	ofVideoPlayer choirVideo;
+	ofVideoPlayer choirVideos[3];
 	
 	ofFbo facesFbo;
 	
