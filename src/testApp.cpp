@@ -15,6 +15,8 @@ void testApp::setup()
 {
 	ofBackground(0, 0, 0);
 	ofSetFrameRate(60);
+	fadeFrom = NULL;
+	fadeTo = NULL;
 	scaleFactor = 0.2;
 	width = 640;
 	height = 480;
@@ -51,6 +53,8 @@ void testApp::setup()
 		choirVideos[i].loadMovie(choirVideoFileNames[i]);
 	}
 	
+	choirVideos[interactionLevel].play();
+	
 	// XML for choir faces
 	choirFaceDir.allowExt("xml");
 	choirFaceDir.listDir("choirfacedata"); // find what's in the directory
@@ -71,8 +75,36 @@ void testApp::setup()
 
 void testApp::update()
 {
+	if (interactionLevel != currentMovieLevel && !fadeFrom && !fadeTo)
+	{
+		fadeFrom = &choirVideos[currentMovieLevel];
+		fadeTo = &choirVideos[interactionLevel];
+		fadeTo->setFrame(fadeFrom->getCurrentFrame());
+		fadeTo->play();
+		fadeToAlpha = 0;
+	}
+	
 	// update with new frames
-	choirVideos[0].update();
+	if (currentMovieLevel != interactionLevel)
+	{
+		fadeToAlpha += 40;
+		if (fadeToAlpha > 255) fadeToAlpha = 255;
+		if (fadeToAlpha == 255)
+		{
+			fadeFrom->stop();
+			fadeFrom = NULL;
+			fadeTo = NULL;
+			currentMovieLevel = interactionLevel;
+		}
+		else
+		{
+			fadeFrom->update();
+			fadeTo->update();
+		}
+	}
+		
+	if (currentMovieLevel == interactionLevel) choirVideos[interactionLevel].update();
+
 	videoPtr->update();
 	
 	// create new thread
@@ -113,19 +145,17 @@ void testApp::update()
 
 void testApp::draw()
 {
-	if ( currentMovieLevel == 0 ) currentMovieLevel = interactionLevel;
-	
-	if ( currentMovieLevel != interactionLevel ) {
+	if ( currentMovieLevel != interactionLevel )
+	{
+		ofEnableAlphaBlending();
+		ofSetColor(255, 255, 255, 255 - fadeToAlpha);
+		fadeFrom->draw(0, 0);
 		
-		choirVideos[interactionLevel].draw(0, 0);
-		
-	} 
-	
-	choirVideos[currentMovieLevel].draw(0, 0);
-		
-	ofSetColor(255, 255, 255, 127);
-
-	//videoPtr->draw(0, 0);
+		ofSetColor(255, 255, 255, fadeToAlpha);
+		fadeTo->draw(0, 0);
+		ofDisableAlphaBlending();
+	}
+	else choirVideos[interactionLevel].draw(0, 0);
 	
 	ofSetColor(255, 255, 255);
 	

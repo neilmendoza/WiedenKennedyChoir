@@ -46,6 +46,10 @@ private:
 	ofVideoPlayer choirVideos[3];
 	string choirVideoFileNames[3];
 	int currentMovieLevel;
+	float fadeToAlpha;
+	
+	ofVideoPlayer* fadeFrom;
+	ofVideoPlayer* fadeTo;
 	
 	
 	ofFbo facesFbo;
