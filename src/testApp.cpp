@@ -20,7 +20,8 @@ void testApp::setup()
 	scaleFactor = 0.2;
 	width = 640;
 	height = 480;
-	interactionLevel = 0; // can be changed via keystroke
+	yShift = 96;
+	interactionLevel = 2; // can be changed via keystroke
 	currentMovieLevel = 0;
 	choirVideoFileNames[0] = "choir-1080p-1.mov";
 	choirVideoFileNames[1] = "choir-1080p-2.mov";
@@ -28,14 +29,19 @@ void testApp::setup()
 	drawTriangles = false; // can be changed via keystroke
 	maskImage.loadImage("mask.png"); // to mask the detected faces
 	
+	faceWStretch = .45;
+	faceHStretch = .45;
+	gui.addSlider("Face W stretch", faceWStretch, 0.1f, 0.9f);
+	gui.addSlider("Face H stretch", faceHStretch, 0.1f, 0.9f);
 	
 	messageHandler.setup();
 	
 #ifdef _LIVE
+	//cam.setDeviceID(2);
 	cam.initGrabber(width, height);
 	videoPtr = &cam;
 #else
-	player.loadMovie("test.mov");
+	player.loadMovie("test2.mov");
 	player.play();
 	videoPtr = &player;
 #endif
@@ -62,7 +68,7 @@ void testApp::setup()
 	// XML for choir faces
 	choirFaceDir.allowExt("xml");
 	choirFaceDir.listDir("choirfacedata"); // find what's in the directory
-	//vchoirFaceDir.sort(); // sort into alphabetical order
+	choirFaceDir.sort(); // sort into alphabetical order
 	
 	//allocate the vector to have as many ofImages as there are XML files
 	if( choirFaceDir.size() ){
@@ -73,51 +79,24 @@ void testApp::setup()
 	for(int i = 0; i < (int)choirFaceDir.size(); i++){
 		choirFaces[i].load(choirFaceDir.getPath(i));
 	}
-	gui.show();
+	//gui.show();
 	gui.loadFromXML();
 }
 
 void testApp::update()
-
 {
 	messageHandler.update();
-
-	if (interactionLevel != currentMovieLevel && !fadeFrom && !fadeTo)
-	{
-		fadeFrom = &choirVideos[currentMovieLevel];
-		fadeTo = &choirVideos[interactionLevel];
-		fadeTo->setFrame(fadeFrom->getCurrentFrame());
-		fadeTo->play();
-		fadeToAlpha = 0;
-	}
 	
-	// update with new frames
-	if (currentMovieLevel != interactionLevel)
-	{
-		fadeToAlpha += 40;
-		if (fadeToAlpha > 255) fadeToAlpha = 255;
-		if (fadeToAlpha == 255)
-		{
-			fadeFrom->stop();
-			fadeFrom = NULL;
-			fadeTo = NULL;
-			currentMovieLevel = interactionLevel;
-		}
-		else
-		{
-			fadeFrom->update();
-			fadeTo->update();
-		}
-	}
-		
-	if (currentMovieLevel == interactionLevel) choirVideos[interactionLevel].update();
-
 	videoPtr->update();
 	
 	// create new thread
 	if(videoPtr->isFrameNew() && !faceTracker.isThreadRunning())	
 	{
 		RectTracker& tracker = faceTracker.getTracker();
+		
+		//interactionLevel = tracker.getCurrentLabels().size();
+		//if (interactionLevel < 0) interactionLevel = 0;
+		//else if (interactionLevel > 2) interactionLevel = 2;
 		
 		for (map<unsigned, LiveFace>::iterator it = faces.begin(); it != faces.end(); ++it)
 		{
@@ -145,10 +124,34 @@ void testApp::update()
 		it->second.lerpToCurrent(facePosLerp, faceSizeLerp);
 	}
 	
-	if ( currentMovieLevel != interactionLevel ) {
-		choirVideos[interactionLevel].play();
+	if (interactionLevel != currentMovieLevel && !fadeFrom && !fadeTo)
+	{
+		fadeFrom = &choirVideos[currentMovieLevel];
+		fadeTo = &choirVideos[interactionLevel];
+		fadeTo->setFrame(fadeFrom->getCurrentFrame());
+		fadeTo->play();
+		fadeToAlpha = 0;
 	}
-
+	
+	// update with new frames
+	if (currentMovieLevel != interactionLevel)
+	{
+		fadeToAlpha += 40;
+		if (fadeToAlpha > 255) fadeToAlpha = 255;
+		if (fadeToAlpha == 255)
+		{
+			fadeFrom->stop();
+			fadeFrom = NULL;
+			fadeTo = NULL;
+			currentMovieLevel = interactionLevel;
+		}
+		else
+		{
+			fadeFrom->update();
+			fadeTo->update();
+		}
+	}
+	if (currentMovieLevel == interactionLevel) choirVideos[interactionLevel].update();	
 }
 
 
@@ -158,13 +161,14 @@ void testApp::draw()
 	{
 		ofEnableAlphaBlending();
 		ofSetColor(255, 255, 255, 255 - fadeToAlpha);
-		fadeFrom->draw(0, 0);
+		fadeFrom->draw(0, yShift);
 		
 		ofSetColor(255, 255, 255, fadeToAlpha);
-		fadeTo->draw(0, 0);
+		fadeTo->draw(0, yShift);
 		ofDisableAlphaBlending();
 	}
-	else choirVideos[interactionLevel].draw(0, 0);
+	else choirVideos[interactionLevel].draw(0, yShift);
+	
 	
 	ofSetColor(255, 255, 255);
 	
@@ -204,31 +208,30 @@ void testApp::draw()
 				glTranslatef(frame.centre.x, frame.centre.y, 0);
 				glRotatef(frame.angle, 0, 0, 1);
 				
-				glBegin(GL_QUADS);
+				glBegin(GL_POLYGON);
 				
 				// grab the rect of this liveFace
 				ofRectangle rect = it->second;
 				
-				float shrink = 0.8;
+				// add a bit of extra height to stop the bottom of the face
+				// being cropped
+				float extraH = .2f * rect.height;
+				rect.height += extraH;
+				rect.y -= extraH * .5f;
+				
+				float shrink = 0.7;
 				float halfW = shrink * frame.halfW; 
 				float halfH = shrink * halfW * rect.height / rect.width;
 				
-				// create the first vertex
-				glTexCoord2f(rect.x / scaleFactor, rect.y / scaleFactor);
-				glVertex3f(-halfW, -halfH, 0);
-				
-				// create the second vertex
-				glTexCoord2f((rect.x + rect.width) / scaleFactor, rect.y / scaleFactor);
-				glVertex3f(halfW, -halfH, 0);
-				
-				// create the third vertex
-				glTexCoord2f((rect.x + rect.width) / scaleFactor, (rect.y + rect.height) / scaleFactor);
-				glVertex3f(halfW, halfH, 0);
-				
-				// create the final vertex
-				glTexCoord2f(rect.x / scaleFactor, (rect.y + rect.height) / scaleFactor);
-				glVertex3f(-halfW, halfH, 0);
-				
+				float step = TWO_PI / 20.f;
+				ofVec2f texCoordOrigin((rect.x + 0.5f * rect.width) / scaleFactor, (rect.y + 0.5f * rect.height) / scaleFactor);
+				ofVec2f texCoordRadii((1 - faceWStretch) * rect.width / scaleFactor, (1 - faceHStretch) * rect.height / scaleFactor);
+				for (float theta = 0; theta < TWO_PI; theta += step)
+				{
+					glTexCoord2f(texCoordOrigin.x + texCoordRadii.x * sin(theta), texCoordOrigin.y + texCoordRadii.y * cos(theta));
+					glVertex3f(halfW * sin(theta), halfH * cos(theta), 0);
+				}
+
 				glEnd();
 				
 				glPopMatrix();
@@ -271,9 +274,11 @@ void testApp::draw()
 
 	masker.endMask();
 
-	
+	glPushMatrix();
+	glTranslatef(0, yShift, 0);
 	// the masker draws the faces FBO texture
 	masker.drawEffect(facesFbo.getTextureReference());
+	glPopMatrix();
 	
 	selection.clear();
 	
@@ -298,21 +303,23 @@ void testApp::draw()
 	{
 		faceTracker.drawThresholded(ofGetWidth() - 210, ofGetHeight() - 160, 200, 150);
 		videoPtr->draw(ofGetWidth() - 210, ofGetHeight() - 320, 200, 150);
+	
+		ostringstream oss;
+		oss << "ids: ";
+		for (map<unsigned, LiveFace>::iterator it = faces.begin(); it != faces.end(); ++it)
+		{
+			oss << it->first << ", ";
+		}
+		ofDrawBitmapString(oss.str(), 10, ofGetHeight() - 80);
+		oss.str("");
+		oss << faces.size() << " faces found";
+		ofDrawBitmapString(oss.str(), 10, ofGetHeight() - 60);
+		oss.str("");
+		oss << ofGetFrameRate() << " FPS";
+		ofDrawBitmapString(oss.str(), 10, ofGetHeight() - 40);
 	}
 	
-	ostringstream oss;
-	oss << "ids: ";
-	for (map<unsigned, LiveFace>::iterator it = faces.begin(); it != faces.end(); ++it)
-	{
-		oss << it->first << ", ";
-	}
-	ofDrawBitmapString(oss.str(), 10, ofGetHeight() - 80);
-	oss.str("");
-	oss << faces.size() << " faces found";
-	ofDrawBitmapString(oss.str(), 10, ofGetHeight() - 60);
-	oss.str("");
-	oss << ofGetFrameRate() << " FPS";
-	ofDrawBitmapString(oss.str(), 10, ofGetHeight() - 40);
+	
 	
 	gui.draw();
 }
@@ -331,4 +338,5 @@ void testApp::keyPressed(int key)
 	{
 		gui.toggleDraw();
 	}
+	if (key == 'f') ofToggleFullscreen();
 }

@@ -52,9 +52,10 @@ private:
 	RunningBackground background;
 	ofxCv::CascadeClassifier classifier;
 	vector<cv::Rect> objects;
+	vector<cv::Rect> prevObjects;
 	float scaleFactor;
 	
-	Mat gray, graySmall;
+	Mat gray, graySmall, prevGraySmall;
 	RectTracker tracker;
 	
 	Mat videoMat, videoSmallMat;

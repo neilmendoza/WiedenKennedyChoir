@@ -1,4 +1,9 @@
 build/
 bin/*.app
 bin/data/street.mov
+<<<<<<< HEAD
 bin/data/_*
+=======
+bin/data/_settings.xml
+bin/data/_settings.xml.bak
+>>>>>>> 9306e3ccb424ed81713eda7a33605f3582fcb0da

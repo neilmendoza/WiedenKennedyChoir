@@ -42,7 +42,7 @@ void FaceTracker::setup(float scaleFactor, int w, int h)
 	graySmall = Mat(h * scaleFactor, w * scaleFactor, CV_8UC1);
 	gray = Mat(h, w, CV_8UC1);
 	//tracker.setMinimumAge(200);
-	tracker.setMaximumAge(4);
+	tracker.setMaximumAge(10);
 	tracker.setMaximumDistance(100);
 	
 	threshold = 20;
@@ -88,11 +88,53 @@ void FaceTracker::threadedFunction()
 	//Mat graySmallMat = toCv(graySmall);
 	//equalizeHist(graySmall, graySmall);
 	
+	// detect faces
 	classifier.detectMultiScale(graySmall, objects, 1.06, 2,
 								CascadeClassifier::DO_CANNY_PRUNING |
 								//CascadeClassifier::FIND_BIGGEST_OBJECT |
 								//CascadeClassifier::DO_ROUGH_SEARCH |
 								0);
+	
+	/*
+	// work out movement in those faces
+	if (!prevGraySmall.empty())
+	{
+		vector<cv::Point2f> prevPts, nextPts;
+		int maxPtsToTrack = 20;
+		for (int i = 0; i < objects.size(); ++i)
+		{
+			prevGraySmall(objects[i]);
+			graySmall(objects[i]);
+			goodFeaturesToTrack(prevGraySmall, prevPts,	maxPtsToTrack, 0.01, 4);
+			
+			vector<uchar> status;
+			vector<float> err;
+			//int winSize = panel.getValueI("winSize");
+			calcOpticalFlowPyrLK(
+								 prevGraySmall,
+								 graySmall,
+								 prevPts,
+								 nextPts,
+								 status,
+								 err,								 
+								 objects[i].size()
+								 );
+			ofVec2f total;
+			for (int j = 0; j < prevPts.size(); ++j)
+			{
+				total += ofVec2f(nextPts[j].x - prevPts[j].x, nextPts[j].y - prevPts[j].y);
+			}
+			total *= 1.f / prevPts.size();
+			//objects[i].x -= 0.5f * total.x;
+			//objects[i].y -= 0.5f * total.y;
+		}
+	}
+	*/
+	
+	// track the objects
 	tracker.track(objects);
+	
+	prevObjects = objects;
+	copy(graySmall, prevGraySmall);
 	
 }
