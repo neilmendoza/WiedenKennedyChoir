@@ -12,8 +12,10 @@
 #include "ofMain.h"
 #include "ofxOsc.h"
 
-#define PORT_OUT 9001
-#define PORT_IN 8000
+#define PORT_OUT_PD 9001
+#define PORT_IN_PD 8000
+#define PORT_IN_KINECT 9002
+
 #define HOST "localhost"
 
 class OscHandler {
@@ -23,8 +25,12 @@ public:
 	void setup();
 	void update();
 	void setFaces(int number);
-	ofxOscReceiver inbox;
-	ofxOscSender outbox;
+	string getLyric();
+	int getTime();
+	int getProximity();
+	ofxOscReceiver inboxPD;
+	ofxOscReceiver inboxKinect;
+	ofxOscSender outboxPD;
 
 private:
 	
@@ -32,8 +38,11 @@ private:
 	int oscInteractionLevel;
 	int inputLevel;
 	string lyricLine;
-	int currentWord;
+	int wordTime;
 
+	bool presence;
+	int numberOfBlobs;
+	int proximity;
 	
 
 };

@@ -1,5 +1,19 @@
 // !$*UTF8*$!
 {
+	280099BE148E2D2400F1979E /* FaceTracker.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {968, 1573}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 2392}";
+		};
+	};
+	2833FD09148E6A520073C07A /* LiveFace.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1026, 611}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 1613}";
+		};
+	};
 	E4B69B4C0A3A1720003C02F2 /* Project object */ = {
 		activeBuildConfigurationName = Debug;
 		activeExecutable = F9BDB94214910911001D0A79 /* FaceExample */;
@@ -17,7 +31,7 @@
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					848,
+					790,
 					20,
 					48,
 					43,
@@ -34,8 +48,40 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 345056697;
-			PBXWorkspaceStateSaveDate = 345056697;
+			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					20,
+					750,
+					60,
+					20,
+					48.16259765625,
+					43,
+					43,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFileDataSource_FiletypeID,
+					PBXFileDataSource_Filename_ColumnID,
+					PBXTargetDataSource_PrimaryAttribute,
+					PBXFileDataSource_Built_ColumnID,
+					PBXFileDataSource_ObjectSize_ColumnID,
+					PBXFileDataSource_Errors_ColumnID,
+					PBXFileDataSource_Warnings_ColumnID,
+				);
+			};
+			PBXPerProjectTemplateStateSaveDate = 345144141;
+			PBXWorkspaceStateSaveDate = 345144141;
+		};
+		perUserProjectItems = {
+			F950573E14928D10006D71D5 /* PBXTextBookmark */ = F950573E14928D10006D71D5 /* PBXTextBookmark */;
+			F950573F14928D10006D71D5 /* PBXTextBookmark */ = F950573F14928D10006D71D5 /* PBXTextBookmark */;
+			F950576114928D57006D71D5 /* PBXTextBookmark */ = F950576114928D57006D71D5 /* PBXTextBookmark */;
+			F9BDBAE6149277BE001D0A79 /* PBXTextBookmark */ = F9BDBAE6149277BE001D0A79 /* PBXTextBookmark */;
+			F9BDBAE7149277BE001D0A79 /* PBXTextBookmark */ = F9BDBAE7149277BE001D0A79 /* PBXTextBookmark */;
+			F9BDBAE9149277BE001D0A79 /* PBXTextBookmark */ = F9BDBAE9149277BE001D0A79 /* PBXTextBookmark */;
+			F9BDBAEA149277BE001D0A79 /* PBXTextBookmark */ = F9BDBAEA149277BE001D0A79 /* PBXTextBookmark */;
+			F9BDBAEB149277BE001D0A79 /* PBXTextBookmark */ = F9BDBAEB149277BE001D0A79 /* PBXTextBookmark */;
 		};
 		sourceControlManager = F9BDB94914910916001D0A79 /* Source Control */;
 		userBuildSettings = {
@@ -47,18 +93,69 @@
 			F9BDB94214910911001D0A79 /* FaceExample */,
 		);
 	};
+	E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {968, 448}}";
+			sepNavSelRange = "{192, 0}";
+			sepNavVisRange = "{0, 221}";
+		};
+	};
 	E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1919, 4368}}";
-			sepNavSelRange = "{2504, 0}";
-			sepNavVisRange = "{1577, 1375}";
+			sepNavIntBoundsRect = "{{0, 0}, {968, 4498}}";
+			sepNavSelRange = "{2869, 0}";
+			sepNavVisRange = "{2985, 1066}";
 		};
 	};
 	E4B69E1F0A3A1BDC003C02F2 /* testApp.h */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1919, 897}}";
-			sepNavSelRange = "{1067, 0}";
-			sepNavVisRange = "{169, 901}";
+			sepNavIntBoundsRect = "{{0, 0}, {968, 968}}";
+			sepNavSelRange = "{402, 0}";
+			sepNavVisRange = "{0, 1127}";
+		};
+	};
+	F950573E14928D10006D71D5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E4B69E1D0A3A1BDC003C02F2 /* main.cpp */;
+		name = "main.cpp: 8";
+		rLen = 0;
+		rLoc = 192;
+		rType = 0;
+		vrLen = 221;
+		vrLoc = 0;
+	};
+	F950573F14928D10006D71D5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */;
+		name = "testApp.cpp: 60";
+		rLen = 0;
+		rLoc = 1726;
+		rType = 0;
+		vrLen = 961;
+		vrLoc = 0;
+	};
+	F950576114928D57006D71D5 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E4B69E1E0A3A1BDC003C02F2 /* testApp.cpp */;
+		name = "testApp.cpp: 102";
+		rLen = 0;
+		rLoc = 2869;
+		rType = 0;
+		vrLen = 1066;
+		vrLoc = 2985;
+	};
+	F9BDB8CC1490F9C3001D0A79 /* OscHandler.cpp */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {968, 1573}}";
+			sepNavSelRange = "{1893, 0}";
+			sepNavVisRange = "{904, 992}";
+		};
+	};
+	F9BDB8CD1490F9C3001D0A79 /* OscHandler.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {968, 968}}";
+			sepNavSelRange = "{617, 0}";
+			sepNavVisRange = "{0, 691}";
 		};
 	};
 	F9BDB94214910911001D0A79 /* FaceExample */ = {
@@ -85,6 +182,8 @@
 		executableUserSymbolLevel = 0;
 		libgmallocEnabled = 0;
 		name = FaceExample;
+		savedGlobals = {
+		};
 		showTypeColumn = 0;
 		sourceDirectories = (
 		);
@@ -102,5 +201,55 @@
 	F9BDB94A14910916001D0A79 /* Code sense */ = {
 		isa = PBXCodeSenseManager;
 		indexTemplatePath = "";
+	};
+	F9BDBAE6149277BE001D0A79 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 2833FD09148E6A520073C07A /* LiveFace.cpp */;
+		name = "LiveFace.cpp: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 1613;
+		vrLoc = 0;
+	};
+	F9BDBAE7149277BE001D0A79 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = 280099BE148E2D2400F1979E /* FaceTracker.cpp */;
+		name = "FaceTracker.cpp: 1";
+		rLen = 0;
+		rLoc = 0;
+		rType = 0;
+		vrLen = 2392;
+		vrLoc = 0;
+	};
+	F9BDBAE9149277BE001D0A79 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = E4B69E1F0A3A1BDC003C02F2 /* testApp.h */;
+		name = "testApp.h: 27";
+		rLen = 0;
+		rLoc = 402;
+		rType = 0;
+		vrLen = 1127;
+		vrLoc = 0;
+	};
+	F9BDBAEA149277BE001D0A79 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = F9BDB8CC1490F9C3001D0A79 /* OscHandler.cpp */;
+		name = "OscHandler.cpp: 119";
+		rLen = 0;
+		rLoc = 1893;
+		rType = 0;
+		vrLen = 992;
+		vrLoc = 904;
+	};
+	F9BDBAEB149277BE001D0A79 /* PBXTextBookmark */ = {
+		isa = PBXTextBookmark;
+		fRef = F9BDB8CD1490F9C3001D0A79 /* OscHandler.h */;
+		name = "OscHandler.h: 40";
+		rLen = 0;
+		rLoc = 617;
+		rType = 0;
+		vrLen = 691;
+		vrLoc = 0;
 	};
 }

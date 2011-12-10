@@ -1,5 +1,6 @@
 #include "testApp.h"
 #include "ofxSimpleGuiToo.h"
+#include <cmath>
 
 using namespace ofxCv;
 using namespace cv;
@@ -21,7 +22,7 @@ void testApp::setup()
 	width = 640;
 	height = 480;
 	yShift = 96;
-	interactionLevel = 2; // can be changed via keystroke
+	interactionLevel = 0; // can be changed via keystroke
 	currentMovieLevel = 0;
 	choirVideoFileNames[0] = "choir-1080p-1.mov";
 	choirVideoFileNames[1] = "choir-1080p-2.mov";
@@ -97,7 +98,19 @@ void testApp::update()
 		//interactionLevel = tracker.getCurrentLabels().size();
 		//if (interactionLevel < 0) interactionLevel = 0;
 		//else if (interactionLevel > 2) interactionLevel = 2;
+		messageHandler.setFaces(tracker.getCurrentLabels().size());
+		//int p = messageHandler.getProximity();
 		
+		/*printf("************** InteractionLevel %i", p);
+		if ( p != NULL ) {
+			interactionLevel = 2 - floor(ofMap(p, 0, 100, 0, 3, true));
+			printf("************** InteractionLevel %i", interactionLevel);	
+		} else {
+			interactionLevel = 0;
+		}
+		printf("************** InteractionLevel %i\n", interactionLevel);	
+
+		*/
 		for (map<unsigned, LiveFace>::iterator it = faces.begin(); it != faces.end(); ++it)
 		{
 			if (!tracker.existsCurrent(it->first)) faces.erase(it);
@@ -116,7 +129,7 @@ void testApp::update()
 		}
 		faceTracker.update(*videoPtr);
 		
-		messageHandler.setFaces(labels.size());
+		
 	}
 	
 	for (map<unsigned, LiveFace>::iterator it = faces.begin(); it != faces.end(); ++it)
